@@ -20,3 +20,16 @@ GET {{web_api_HostAddress}}/api/superhero/0
 GET {{web_api_HostAddress}}/weatherforecast
 
 ###
+
+PUT {{web_api_HostAddress}}/api/superhero
+Content-Type: application/json
+
+{
+  //SuperHero
+}
+
+###
+
+DELETE {{web_api_HostAddress}}/api/superhero?id=0
+
+###
