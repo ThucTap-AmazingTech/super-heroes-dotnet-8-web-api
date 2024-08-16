@@ -36,11 +36,30 @@ namespace web_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<SuperHero>>> AddHero([FromBody]SuperHero hero)
+        public async Task<ActionResult<List<SuperHero>>> AddHero(SuperHero hero)
         {
             _context.SuperHeroes.Add(hero);
             await _context.SaveChangesAsync();
             return Ok(await _context.SuperHeroes.ToListAsync());
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<SuperHero>> UpdateHero(SuperHero hero)
+        {
+            var dbHero = await _context.SuperHeroes.FindAsync(hero.Id);
+            if (dbHero is null)
+            {
+                return NotFound("Hero Not Found!");
+            }
+
+            dbHero.Name = hero.Name;
+            dbHero.FirstName = hero.FirstName;
+            dbHero.LastName = hero.LastName;
+            dbHero.Place = hero.Place;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.SuperHeroes.FindAsync(hero.Id));
         }
     }
 }
